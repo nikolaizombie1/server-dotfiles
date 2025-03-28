@@ -45,6 +45,26 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  systemd.timers."weekly-update" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
+        Unit = "weekly-update.service";
+      };
+  };
+
+  systemd.services."weekly-update" = {
+    script = ''
+      set -eu
+      ${pkgs.bash}/bin/bash -c "cd /home/weeb/Mass_Storage/Nix_Flake && ${pkgs.nix}/bin/nix flake update && ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake .#weeb"
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
@@ -103,6 +123,7 @@
   #  wget
     neovim
     plymouth
+    git
   ];
 
   virtualisation.docker.enable = true;
