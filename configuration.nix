@@ -124,6 +124,8 @@
     neovim
     plymouth
     git
+    ncdu
+    mpv
   ];
 
   virtualisation.docker.enable = true;
@@ -135,6 +137,8 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  services.openssh.settings.X11Forwarding = true; 
 
   # List services that you want to enable:
 
