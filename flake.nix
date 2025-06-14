@@ -5,9 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
-  outputs = { nixpkgs, ... } @ inputs: {
+  outputs = { nixpkgs, ...} @ inputs: {
 
-nixosConfigurations.uwu = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.weeb = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
         ./configuration.nix
