@@ -45,25 +45,17 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  systemd.timers."weekly-update" = {
-    wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "weekly";
-        Persistent = true;
-        Unit = "weekly-update.service";
-      };
-  };
+system.autoUpgrade = {
+  enable = true;
+  flake = "github:nikolaizombie1/server-dotfiles#weeb";
+  flags = [
+    "-L" # print build logs
+  ];
+  dates = "Mon *-*-* 00:00:00";
+  randomizedDelaySec = "45min";
+};
 
-  systemd.services."weekly-update" = {
-    script = ''
-      set -eu
-      ${pkgs.bash}/bin/bash -c "cd /home/weeb/Mass_Storage/Nix_Flake && ${pkgs.nix}/bin/nix flake update && ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake .#weeb"
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
+  services.mullvad-vpn.enable = true;
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -138,7 +130,10 @@
   #   enableSSHSupport = true;
   # };
 
-  services.openssh.settings.X11Forwarding = true; 
+  services.openssh.settings = {
+    X11Forwarding = true; 
+    PermitRootLogin = "no";
+  };
 
   # List services that you want to enable:
 
@@ -151,6 +146,16 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /export/Mass_Storage/ *(rw,sync,no_subtree_check)
+    '';
+    lockdPort = 4001;
+    mountdPort = 4002;
+    statdPort = 4000;
+ };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

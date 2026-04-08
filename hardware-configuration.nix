@@ -2,7 +2,10 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
+let
+  massStorage = "/dev/disk/by-uuid/38caaa51-55b5-47ad-b740-0b065ba42ade";
+  massStorageLoc = "/home/weeb/Mass_Storage";
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
@@ -18,10 +21,14 @@
       fsType = "ext4";
     };
 
-  fileSystems."/home/weeb/Mass_Storage" =
-    { device = "/dev/disk/by-uuid/38caaa51-55b5-47ad-b740-0b065ba42ade";
+  fileSystems."${massStorageLoc}" =
+    { device = "${massStorage}";
       fsType = "ext4";
     };
+  fileSystems."/export/Mass_Storage" = 
+  {   device = "${massStorageLoc}";
+      options = [ "bind" ];
+  };
 
   swapDevices = [ ];
 
