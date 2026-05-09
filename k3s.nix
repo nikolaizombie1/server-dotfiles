@@ -135,7 +135,7 @@ in
         targetNamespace = "cert-manager";
         createNamespace = true;
         values = {
-          state = "production";
+          stage = "production";
           cf = {
             secrets = {
               apiToken = (builtins.readFile ./${secretsLoc}/cf-password);
