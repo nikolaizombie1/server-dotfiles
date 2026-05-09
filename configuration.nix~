@@ -2,24 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./k3s.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+    ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -54,24 +45,12 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = "github:nikolaizombie1/server-dotfiles#weeb";
-    flags = [
-      "-L" # print build logs
-    ];
-    dates = "Mon *-*-* 00:00:00";
-    randomizedDelaySec = "45min";
-  };
-
-  services.mullvad-vpn.enable = true;
-
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -83,7 +62,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -105,13 +84,9 @@
   users.users.weeb = {
     isNormalUser = true;
     description = "weeb";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      #  thunderbird
+    #  thunderbird
     ];
   };
 
@@ -124,28 +99,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
     neovim
-    plymouth
-    git
     ncdu
-    mpv
   ];
-
-  virtualisation.docker.enable = true;
-  # virtualisation.oci-containers = {
-  #   backend = "docker";
-  #   containers = {
-  #     startup = {
-  #       image = "aramismatos/wake-on-lan:wol-test";
-  #       ports = [ "3001:3001" ];
-  #       environmentFiles = [ ./.env/startup.env ];
-  #       extraOptions = [ "--network=host" ];
-  #       autoStart = true;
-  #     };
-  #   };
-  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -154,11 +112,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  services.openssh.settings = {
-    X11Forwarding = true;
-    PermitRootLogin = "no";
-  };
 
   # List services that you want to enable:
 
@@ -170,18 +123,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
-  services.nfs.server = {
-    enable = true;
-    exports = ''
-      /export/Mass_Storage/ *(rw,sync,no_subtree_check)
-      /export/Mass_Storage/Downloads *(rw,sync,no_subtree_check)
-    '';
-    lockdPort = 4001;
-    mountdPort = 4002;
-    statdPort = 4000;
-  };
+  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
