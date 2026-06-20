@@ -177,6 +177,7 @@
     exports = ''
       /export/Mass_Storage/ *(rw,sync,no_subtree_check)
       /export/Mass_Storage/Downloads *(rw,sync,no_subtree_check)
+      /export/Mass_Storage/Slskd *(rw,sync,no_subtree_check)
     '';
     lockdPort = 4001;
     mountdPort = 4002;

@@ -155,8 +155,8 @@ in
       vpn = {
         repo = personalRepo;
         name = "vpn";
-        version = "0.1.2";
-        hash = "sha256-2ygWkZOD5er5FqL+x7oi0jsw8BCsh3CJP/taGwz/iK8=";
+        version = "0.6.0";
+        hash = "sha256-ba3khTRs37IOnTajWGj+F76uHK9pxUP/78qprYFzG0w=";
         targetNamespace = "vpn";
         createNamespace = true;
         values = {
@@ -168,6 +168,11 @@ in
               privateKey = {
                 value = (builtins.readFile ./${secretsLoc}/gluetun-private-key);
               };
+            };
+          };
+          slskd = {
+            config = {
+              value =  (builtins.readFile ./${secretsLoc}/slskd.yml);
             };
           };
         };
