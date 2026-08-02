@@ -178,6 +178,9 @@
       /export/Mass_Storage/ *(rw,sync,no_subtree_check)
       /export/Mass_Storage/Downloads *(rw,sync,no_subtree_check)
       /export/Mass_Storage/Slskd *(rw,sync,no_subtree_check)
+      /export/Mass_Storage/SoulSync *(rw,sync,no_subtree_check)
+      /export/Mass_Storage/Soulsync/Transfer *(rw,sync,no_subtree_check)
+      /export/Mass_Storage/Soulsync/Staging *(rw,sync,no_subtree_check)
     '';
     lockdPort = 4001;
     mountdPort = 4002;

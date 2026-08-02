@@ -155,8 +155,8 @@ in
       vpn = {
         repo = personalRepo;
         name = "vpn";
-        version = "0.6.0";
-        hash = "sha256-ba3khTRs37IOnTajWGj+F76uHK9pxUP/78qprYFzG0w=";
+        version = "0.8.0";
+        hash = "sha256-DWlSgF4auWyW1Jl9qpr00ApeHJ1tv/CzsMNaqqrD+ds=";
         targetNamespace = "vpn";
         createNamespace = true;
         values = {
@@ -174,6 +174,12 @@ in
             config = {
               value =  (builtins.readFile ./${secretsLoc}/slskd.yml);
             };
+          };
+          soulsync = {
+            config = {
+                value = (builtins.readFile  ./${secretsLoc}/config.kub.json);
+                apiKeyValue = (builtins.readFile  ./${secretsLoc}/slsk-api-key);
+              };
           };
         };
       };
