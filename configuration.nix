@@ -131,6 +131,7 @@
     git
     ncdu
     mpv
+    python312
   ];
 
   virtualisation.docker.enable = true;
@@ -176,6 +177,7 @@
     enable = true;
     exports = ''
       /export/Mass_Storage/ *(rw,sync,no_subtree_check)
+      /export/Mass_Storage/Music *(rw,sync,no_subtree_check)
       /export/Mass_Storage/Downloads *(rw,sync,no_subtree_check)
       /export/Mass_Storage/Slskd *(rw,sync,no_subtree_check)
       /export/Mass_Storage/SoulSync *(rw,sync,no_subtree_check)
