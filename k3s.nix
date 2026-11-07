@@ -155,7 +155,7 @@ in
       vpn = {
         repo = personalRepo;
         name = "vpn";
-        version = "0.9.0";
+        version = "0.10.0";
         hash = "sha256-DWlSgF4auWyW1Jl9qpr00ApeHJ1tv/CzsMNaqqrD+ds=";
         targetNamespace = "vpn";
         createNamespace = true;
